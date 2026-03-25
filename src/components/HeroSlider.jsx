@@ -63,7 +63,7 @@ export default function HeroSlider() {
   ];
 
   return (
-    <div className="w-full h-[600px] md:h-[700px] lg:h-[90vh] min-h-[600px] mt-[72px] font-sans bg-black overflow-hidden relative group">
+    <div className="w-full h-[600px] md:h-[700px] lg:h-[90vh] min-h-[600px] mt-[80px] font-sans bg-black overflow-hidden relative group">
       {/* Subtle Cinematic Noise Texture Overlay */}
       <div
         className="absolute inset-0 z-20 opacity-[0.15] pointer-events-none mix-blend-overlay"

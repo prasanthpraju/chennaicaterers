@@ -1,68 +1,61 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Sparkles, Clock, Users, Star, Heart, Coffee, Utensils, Cake } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CateringSection1 from "../assets/CateringSection/sec1.png"
 import CateringSection2 from "../assets/CateringSection/sec2.png"
 import CateringSection3 from "../assets/CateringSection/sec3.png"
-
-
+import CateringSection4 from "../assets/CateringSection/sec4.png"
+import CateringSection5 from "../assets/CateringSection/sec5.png"
+import CateringSection6 from "../assets/CateringSection/sec6.png"
 const menuData = [
   {
     id: 1,
-    category: "CHENNAI CATERING",
     title: "Break Fast Menu",
     description: "For all occasions and weddings, Chennai Catering Service provides the best breakfast menu; we also assist customers in building a customised menu that is personalised to their preferences and suitable for the celebration.",
     longDescription: "Our breakfast menu features an exquisite selection of traditional South Indian delicacies including crispy dosas, fluffy idlis, flavorful vadas, and aromatic pongal. Each dish is prepared with authentic spices and fresh ingredients, ensuring a memorable start to any celebration.",
     image: CateringSection1,
-    features: ["Traditional Recipes", "Fresh Ingredients", "Customizable"],
-    rating: 4.9,
-    prepTime: "30-45 min",
-    serves: "10-500 guests",
-    icon: Coffee,
     bgGradient: "from-orange-500/20 to-red-500/20"
   },
   {
     id: 2,
-    category: "CHENNAI CATERING",
     title: "Lunch Menu",
     description: "Chennai Catering Service provides delicious lunch menus for a variety of gatherings and events; we also allow customers to create a custom menu based on their tastes, budget, and pricing range.",
     longDescription: "Experience the richness of authentic Tamil Nadu cuisine with our elaborate lunch menus. From traditional banana leaf service to modern buffet presentations, we offer a wide range of vegetarian and non-vegetarian options.",
     image: CateringSection2,
-    features: ["Banana Leaf Service", "Multiple Curries", "Traditional Desserts"],
-    rating: 4.8,
-    prepTime: "60-90 min",
-    serves: "20-1000 guests",
-    icon: Utensils,
     bgGradient: "from-green-500/20 to-teal-500/20"
   },
   {
     id: 3,
-    category: "CHENNAI CATERING",
     title: "Dinner Menu",
     description: "Elegant dinner spreads featuring both South Indian specialties and fusion cuisine, perfect for evening receptions and formal gatherings.",
     longDescription: "Our dinner menu combines traditional flavors with contemporary presentation. Choose from our curated selection of starters, main courses, and desserts that will leave your guests impressed.",
     image: CateringSection3,
-    features: ["Live Counters", "Fusion Cuisine", "Premium Ingredients"],
-    rating: 4.9,
-    prepTime: "45-60 min",
-    serves: "15-800 guests",
-    icon: Utensils,
     bgGradient: "from-purple-500/20 to-pink-500/20"
   },
-  {
-    id: 4,
-    category: "CHENNAI CATERING",
-    title: "Dessert Special",
-    description: "Indulgent sweet treats and traditional desserts crafted to add a perfect sweet ending to your celebrations.",
-    longDescription: "From classic payasam to modern dessert presentations, our sweet menu is designed to delight every palate. We offer a variety of traditional sweets and contemporary options.",
-    image: "/path-to-dessert-image.jpg",
-    features: ["Traditional Sweets", "Live Counters", "Custom Cakes"],
-    rating: 4.9,
-    prepTime: "30-45 min",
-    serves: "10-500 guests",
-    icon: Cake,
-    bgGradient: "from-yellow-500/20 to-orange-500/20"
-  }
+    {
+      id: 4,
+      title: "Wedding Specials",
+      description: "Grand wedding catering with traditional South Indian flavors and elegant presentation to make your big day unforgettable.",
+      longDescription: "Our wedding catering service is designed to deliver a luxurious and authentic experience. From classic banana leaf meals to multi-course premium buffets, we handle everything with perfection. We ensure taste, hygiene, and flawless service that matches your celebration scale.",
+      image: CateringSection4,
+      bgGradient: "from-pink-500/20 to-red-500/20"
+    },
+    {
+      id: 5,
+      title: "Outdoor Catering",
+      description: "Perfect catering solutions for outdoor events, beach parties, and garden celebrations with live cooking experience.",
+      longDescription: "We specialize in outdoor catering setups including beach events, terrace parties, and garden weddings. Our team ensures seamless service with live cooking stations, fresh food preparation, and a vibrant dining experience anywhere you host.",
+      image: CateringSection5,
+      bgGradient: "from-blue-500/20 to-cyan-500/20"
+    },
+    {
+      id: 6,
+      title: "Corporate Catering",
+      description: "Professional catering services tailored for corporate meetings, office events, and business gatherings.",
+      longDescription: "Our corporate catering ensures timely delivery, premium quality food, and professional presentation. Whether it's office lunches, conferences, or team events, we provide customized menus that suit your business needs and impress your clients.",
+      image: CateringSection6,
+      bgGradient: "from-gray-500/20 to-slate-500/20"
+    }
 ];
 
 const CateringSection = () => {
@@ -116,8 +109,6 @@ const CateringSection = () => {
   const displayedDescription = isExpanded 
     ? activeMenu.longDescription 
     : activeMenu.description;
-
-  const ActiveIcon = activeMenu.icon;
 
   // Animation variants for slider
   const slideVariants = {
@@ -182,10 +173,7 @@ const CateringSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-8 md:mb-12"
         >
-          <div className="inline-flex items-center gap-2 bg-orange-50 px-3 py-1.5 rounded-full mb-3 border border-orange-100">
-            <Sparkles size={14} className="text-orange-500 animate-pulse" />
-            <span className="text-orange-600 font-semibold text-xs tracking-wide">CURATED EXPERIENCES</span>
-          </div>
+           
           <h2 className="text-3xl md:text-4xl font-black text-gray-900 uppercase tracking-tight mb-2">
             Our Signature <span className="text-red-600 relative inline-block">
               Menus
@@ -242,40 +230,6 @@ const CateringSection = () => {
                   
                   {/* Overlay Gradient */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                  
-                  {/* Floating Badges */}
-                  <div className="absolute top-4 left-4 z-20 flex gap-2">
-                    <motion.span 
-                      initial={{ x: -20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.3 }}
-                      className="bg-white/95 backdrop-blur-sm text-orange-600 px-3 py-1.5 rounded-full text-xs font-bold shadow-lg flex items-center gap-1 border border-orange-100"
-                    >
-                      <Star size={12} className="fill-orange-500 text-orange-500" />
-                      {activeMenu.rating}
-                    </motion.span>
-                  </div>
-                  
-                  <div className="absolute bottom-4 right-4 z-20 flex gap-2">
-                    <motion.span 
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.4 }}
-                      className="bg-black/80 backdrop-blur-sm text-white px-2.5 py-1 rounded-full text-xs font-medium flex items-center gap-1"
-                    >
-                      <Clock size={10} />
-                      {activeMenu.prepTime}
-                    </motion.span>
-                    <motion.span 
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.5 }}
-                      className="bg-black/80 backdrop-blur-sm text-white px-2.5 py-1 rounded-full text-xs font-medium flex items-center gap-1"
-                    >
-                      <Users size={10} />
-                      {activeMenu.serves}
-                    </motion.span>
-                  </div>
                 </motion.div>
               </AnimatePresence>
               
@@ -358,13 +312,6 @@ const CateringSection = () => {
               exit="exit"
               className="space-y-4"
             >
-              {/* Category Badge */}
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-50 to-red-50 px-3 py-1.5 rounded-full border border-orange-100">
-                <ActiveIcon size={14} className="text-red-600" />
-                <span className="text-red-600 font-bold tracking-wider text-xs uppercase">
-                  {activeMenu.category}
-                </span>
-              </div>
               
               {/* Title */}
               <h2 className="text-2xl md:text-3xl font-black text-gray-900 uppercase tracking-tight">
@@ -386,21 +333,6 @@ const CateringSection = () => {
                     className={`transition-transform duration-300 ${isExpanded ? 'rotate-90' : 'group-hover:translate-x-1'}`}
                   />
                 </button>
-              </div>
-              
-              {/* Feature Tags */}
-              <div className="flex flex-wrap gap-2 pt-1">
-                {activeMenu.features.map((feature, idx) => (
-                  <motion.span 
-                    key={idx}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.3 + idx * 0.1 }}
-                    className="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-xs font-semibold hover:bg-red-100 hover:text-red-600 transition-colors cursor-default"
-                  >
-                    {feature}
-                  </motion.span>
-                ))}
               </div>
               
               {/* Manual Navigation Arrows */}
@@ -427,26 +359,9 @@ const CateringSection = () => {
                 </button>
               </div>
               
-              {/* CTA Button */}
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5 }}
-                className="pt-2"
-              >
-                {/* <button className="group relative inline-flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-6 py-2.5 rounded-full font-bold shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 overflow-hidden text-sm"> */}
-                  {/* <span className="relative z-10">Inquire About This Menu</span> */}
-                  {/* <Sparkles size={14} className="relative z-10 group-hover:rotate-12 transition-transform" /> */}
-                  {/* <div className="absolute inset-0 bg-gradient-to-r from-green-700 to-green-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300" /> */}
-                {/* </button> */}
-              </motion.div>
             </motion.div>
           </AnimatePresence>
         </div>
-
-       
-      
       </div>
     </section>
   );
