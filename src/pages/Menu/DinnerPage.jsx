@@ -1,22 +1,21 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { AlertCircle, RefreshCw, ShoppingBag, Plus } from "lucide-react";
 
 export default function DinnerPage() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Base URL for resolving relative image paths from your CMS
   const API_BASE_URL = "https://api.chennaicaterers.in";
 
   useEffect(() => {
-    // Updated API endpoint for dinner
     fetch(`${API_BASE_URL}/api/menus?populate=*&filters[category][name][$eq]=dinner`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch menu");
         return res.json();
       })
       .then((result) => {
-        // Strapi wraps the array inside a "data" property
         setData(result.data || []);
         setLoading(false);
       })
@@ -27,132 +26,180 @@ export default function DinnerPage() {
       });
   }, []);
 
-  // 1. Premium Skeleton Loader
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  };
+
   if (loading) {
     return (
-      <div className="p-6 max-w-7xl mx-auto min-h-screen">
-        <div className="h-10 w-48 bg-gray-200 rounded animate-pulse mb-8"></div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className="border border-gray-100 rounded-2xl p-5 shadow-sm bg-white h-72 animate-pulse flex flex-col">
-              <div className="h-32 bg-gray-100 rounded-xl mb-4 w-full"></div>
-              <div className="h-5 bg-gray-200 rounded w-3/4 mb-2"></div>
-              <div className="h-4 bg-gray-100 rounded w-full mb-auto"></div>
-              <div className="flex justify-between items-center mt-4">
-                <div className="h-6 bg-gray-200 rounded w-16"></div>
-                <div className="h-8 bg-gray-200 rounded w-20"></div>
+      /* Added pt-24 for mobile to clear the navbar during loading too */
+      <section className="bg-gray-50 pt-24 pb-12 md:py-24 font-sans min-h-screen">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="h-10 md:h-12 w-48 md:w-64 bg-gray-200 rounded-lg animate-pulse mb-4 mx-auto md:mx-0"></div>
+          <div className="h-4 w-32 md:w-48 bg-gray-200 rounded animate-pulse mb-10 mx-auto md:mx-0"></div>
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="flex flex-col relative animate-pulse pb-2 md:pb-0">
+                <div className="h-40 md:h-52 bg-gray-200 w-full rounded-2xl"></div>
+                <div className="md:hidden relative z-10 -mt-6 mx-2 bg-white rounded-xl h-16 shadow-sm border border-gray-100"></div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
     );
   }
 
-  // 2. Error State
   if (error) {
     return (
-      <div className="p-10 text-center flex flex-col items-center justify-center min-h-[50vh]">
-        <div className="text-red-400 text-5xl mb-4">🍽️</div>
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Oops! Menu is unavailable</h2>
-        <p className="text-gray-500 mb-6">We couldn't load the dinner items right now.</p>
-        <button
-          onClick={() => window.location.reload()}
-          className="px-5 py-2.5 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors"
-        >
-          Try Again
-        </button>
-      </div>
+      <section className="bg-gray-50 py-24 font-sans min-h-screen flex items-center justify-center">
+        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center px-6">
+          <div className="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
+            <AlertCircle size={36} strokeWidth={2} />
+          </div>
+          <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tight mb-3">Menu Unavailable</h2>
+          <p className="text-gray-500 mb-8 max-w-md mx-auto font-medium">We couldn't load the dinner items right now. Please try again.</p>
+          <button onClick={() => window.location.reload()} className="group inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-red-600 transition-colors shadow-lg active:scale-95">
+            <RefreshCw size={18} className="group-hover:rotate-180 transition-transform duration-500" /> TRY AGAIN
+          </button>
+        </motion.div>
+      </section>
     );
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto min-h-screen bg-gray-50/50">
-      
-      <header className="mb-10 text-center md:text-left">
-        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight mb-2">
-          Dinner Menu
-        </h1>
-        <p className="text-gray-500 text-lg">
-          Explore our evening specials, curated just for you.
-        </p>
-      </header>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {data.length > 0 ? (
-          data.map((item) => {
-            // Safely extract the image URL and prepend the API domain
-            const imageUrl = item.image?.[0]?.url 
-              ? `${API_BASE_URL}${item.image[0].url}` 
-              : null;
-
-            return (
-              <article
-                key={item.documentId || item.id}
-                className="group flex flex-col bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+    /* FIXED: Added pt-24 (top padding) on mobile to prevent navbar overlap. 
+       md:pt-24 ensures desktop spacing remains consistent.
+    */
+    <section className="bg-gray-50 pt-24 pb-12 md:py-24 font-sans min-h-screen overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center md:text-left mb-10 md:mb-16"
+        > 
+          <h2 className="text-3xl md:text-5xl font-black text-gray-900 uppercase tracking-tight mb-3 md:mb-4">
+            Dinner <span className="text-red-600 relative inline-block">
+              Menu
+              <motion.svg 
+                initial={{ width: 0 }} animate={{ width: "100%" }} transition={{ duration: 0.8, delay: 0.3 }}
+                className="absolute -bottom-1 md:-bottom-2 left-0 h-2 md:h-3 text-red-200" viewBox="0 0 200 10" fill="currentColor"
               >
-                {/* Image Area */}
-                <div className="h-44 bg-gray-100 relative overflow-hidden flex-shrink-0">
-                  {imageUrl ? (
-                    <img 
-                      src={imageUrl} 
-                      alt={item.name} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center text-gray-300">
-                      <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    </div>
-                  )}
-                  
-                  {/* Veg Badge Overlay */}
-                  {item.isVeg && (
-                    <span className="absolute top-3 right-3 bg-green-50/95 backdrop-blur-sm text-green-700 border border-green-200 text-xs px-2.5 py-1 rounded-md font-bold shadow-sm flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-green-600"></span> Veg
-                    </span>
-                  )}
-                </div>
+                <path d="M0,5 Q50,0 100,5 T200,5" stroke="none" fill="currentColor" />
+              </motion.svg>
+            </span>
+          </h2>
+          <p className="text-gray-600 text-xs sm:text-sm md:text-base leading-relaxed font-medium max-w-2xl mx-auto md:mx-0 px-2 md:px-0">
+            Explore our evening specials. We ensure that the food we provide is nutritious, perfectly cooked, and satisfies your tastebuds.
+          </p>
+        </motion.div>
 
-                {/* Content Area */}
-                <div className="p-5 flex flex-col flex-grow">
-                  <h3 className="font-bold text-xl text-gray-900 mb-1 capitalize line-clamp-1 group-hover:text-red-600 transition-colors">
-                    {item.name || "Menu Item"}
-                  </h3>
-                  
-                  <p className="text-gray-500 text-sm flex-grow mb-5 line-clamp-2">
-                    {item.description || "A wonderful dinner to end the day."}
-                  </p>
+        {/* Menu Grid */}
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-8"
+        >
+          {data.length > 0 ? (
+            data.map((item) => {
+              const imageUrl = item.image?.[0]?.url ? `${API_BASE_URL}${item.image[0].url}` : null;
 
-                  <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
-                    <span className="text-gray-900 font-black text-xl tracking-tight">
-                      ₹{item.price || "0"}
-                    </span>
-                    
-                    {/* Add Button - Handles isAvailable status */}
-                    <button 
-                      disabled={!item.isAvailable}
-                      className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors focus:ring-2 focus:outline-none 
-                        ${item.isAvailable 
-                          ? 'bg-red-50 text-red-600 hover:bg-red-600 hover:text-white focus:ring-red-300' 
-                          : 'bg-gray-100 text-gray-400 cursor-not-allowed'}`}
-                    >
-                      {item.isAvailable ? 'Add' : 'Sold Out'}
-                    </button>
+              return (
+                <motion.article
+                  variants={cardVariants}
+                  key={item.documentId || item.id}
+                  className="group relative bg-transparent md:bg-white md:rounded-3xl md:shadow-sm md:hover:shadow-xl md:border md:border-gray-100/50 transition-all duration-300 md:hover:-translate-y-1 flex flex-col cursor-pointer pb-2 md:pb-4 md:p-4"
+                >
+                  <div className="relative h-40 sm:h-48 md:h-52 bg-gray-100 w-full rounded-2xl md:rounded-2xl overflow-hidden flex-shrink-0 z-0 shadow-sm md:shadow-none">
+                    {imageUrl ? (
+                      <img src={imageUrl} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center text-gray-300 bg-gray-50">
+                        <ShoppingBag size={32} strokeWidth={1.5} />
+                      </div>
+                    )}
+                    <div className="hidden md:block absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    {item.isVeg && (
+                      <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-white/95 backdrop-blur-md text-green-700 text-[10px] md:text-xs px-2 py-1 md:px-2.5 md:py-1.5 rounded-md font-bold shadow-sm flex items-center gap-1 z-10">
+                        <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-green-500"></span> Veg
+                      </span>
+                    )}
                   </div>
-                </div>
-              </article>
-            );
-          })
-        ) : (
-          <div className="col-span-full py-20 flex flex-col items-center justify-center text-center bg-white rounded-2xl border border-gray-200 border-dashed">
-            <svg className="w-16 h-16 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-            </svg>
-            <p className="text-gray-600 text-lg font-medium">No dinner items available right now.</p>
-            <p className="text-gray-400 text-sm mt-1">Check back a little later!</p>
-          </div>
-        )}
+
+                  <div className="md:hidden relative z-10 -mt-8 mx-1.5 sm:mx-2 bg-white rounded-xl p-2.5 sm:p-3 shadow-[0_8px_20px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col transition-transform active:scale-[0.98]">
+                    <h3 className="text-gray-900 font-black text-xs sm:text-sm uppercase tracking-tight line-clamp-1 mb-1">
+                      {item.name || "Menu Item"}
+                    </h3>
+                    <div className="flex justify-between items-end">
+                      <span className="text-gray-900 font-bold text-sm sm:text-base tracking-tighter">
+                        ₹{item.price || "0"}
+                      </span>
+                      <div className="relative w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0 cursor-pointer">
+                        {item.isAvailable ? (
+                          <>
+                            <div className="absolute top-0.5 -left-0.5 w-full h-full bg-lime-400 rounded-lg" />
+                            <button className="absolute inset-0 bg-orange-500 text-white rounded-lg flex items-center justify-center shadow-sm w-full h-full active:scale-90 transition-transform">
+                              <Plus size={16} strokeWidth={3} />
+                            </button>
+                          </>
+                        ) : (
+                          <button disabled className="absolute inset-0 bg-gray-50 text-gray-400 rounded-lg flex items-center justify-center border border-gray-200 text-[9px] font-bold">
+                            OUT
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="hidden md:flex flex-col flex-grow px-2 mt-4">
+                    <h3 className="text-lg lg:text-xl font-black text-gray-900 uppercase tracking-tight group-hover:text-red-600 transition-colors duration-300 line-clamp-1 mb-1">
+                      {item.name || "Menu Item"}
+                    </h3>
+                    <p className="text-gray-500 leading-relaxed text-sm font-medium flex-grow mb-5 line-clamp-2">
+                      {item.description || "A wonderful dinner to end the day."}
+                    </p>
+                    <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
+                      <span className="text-gray-900 font-black text-2xl tracking-tighter">
+                        ₹{item.price || "0"}
+                      </span>
+                      <div className="relative w-24 h-10 flex-shrink-0 cursor-pointer group/btn">
+                        {item.isAvailable ? (
+                          <>
+                            <div className="absolute top-1 -left-1 w-full h-full bg-lime-400 rounded-xl transition-transform duration-300 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
+                            <button className="absolute inset-0 bg-orange-400 text-white text-sm font-bold rounded-xl flex items-center justify-center shadow-sm transition-colors duration-300 w-full h-full cursor-pointer focus:outline-none">
+                              ADD
+                            </button>
+                          </>
+                        ) : (
+                          <button disabled className="absolute inset-0 bg-gray-100 text-gray-400 text-sm font-bold rounded-xl flex items-center justify-center border border-gray-200 cursor-not-allowed w-full h-full">
+                            SOLD
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </motion.article>
+              );
+            })
+          ) : (
+            <motion.div variants={cardVariants} className="col-span-full py-16 flex flex-col items-center justify-center text-center bg-white rounded-3xl border border-gray-200 border-dashed shadow-sm mx-2">
+              <ShoppingBag className="w-12 h-12 md:w-16 md:h-16 text-gray-300 mb-4" strokeWidth={1} />
+              <p className="text-gray-900 text-lg md:text-xl font-black uppercase tracking-tight mb-2">No items available</p>
+              <p className="text-gray-500 text-xs md:text-sm font-medium">Check back a little later for our dinner specials!</p>
+            </motion.div>
+          )}
+        </motion.div>
       </div>
-    </div>
+    </section>
   );
 }
