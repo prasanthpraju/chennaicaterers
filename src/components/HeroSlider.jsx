@@ -63,7 +63,9 @@ export default function HeroSlider() {
   ];
 
   return (
-    <div className="w-full h-[600px] md:h-[700px] lg:h-[90vh] min-h-[600px] mt-[80px] font-sans bg-black overflow-hidden relative group">
+    // FIX: Replaced mt-[80px] with pt-[72px] to push content down without creating a white gap above the container
+    <div className="w-full h-[600px] md:h-[700px] lg:h-[90vh] min-h-[600px] pt-[72px] font-sans bg-black overflow-hidden relative group">
+      
       {/* Subtle Cinematic Noise Texture Overlay */}
       <div
         className="absolute inset-0 z-20 opacity-[0.15] pointer-events-none mix-blend-overlay"
@@ -119,7 +121,7 @@ export default function HeroSlider() {
               </div>
 
               {/* 4. Main Content Container */}
-              <div className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 max-w-5xl mx-auto w-full">
+              <div className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 max-w-5xl mx-auto w-full -mt-10 md:mt-0">
                 {/* Promo Pill */}
                 <div className="hero-animate delay-100 mb-6 flex items-center gap-3 bg-white/5 backdrop-blur-xl border border-white/10 p-1.5 rounded-full shadow-[0_0_30px_rgba(220,38,38,0.2)]">
                   <div className="bg-red-600 text-white px-3 py-1 rounded-full text-xs font-black tracking-widest flex items-center gap-1">
@@ -146,19 +148,8 @@ export default function HeroSlider() {
                   {slide.subtitle}
                 </p>
 
-                {/* UNIQUE REPLACEMENT FOR BUTTONS: Flavor/Experience Tags & Scroll Indicator */}
+                {/* Scroll Indicator */}
                 <div className="hero-animate delay-400 flex flex-col items-center gap-8">
-                  {/* <div className="flex flex-wrap justify-center gap-3">
-                    {slide.tags.map((tag, index) => (
-                      <span
-                        key={index}
-                        className="px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white text-sm font-medium tracking-wide hover:bg-white/20 hover:scale-105 transition-all cursor-default"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div> */}
-
                   <div className="flex flex-col items-center gap-2 cursor-pointer group mt-4">
                     <span className="text-xs text-gray-400 font-bold uppercase tracking-[0.3em] group-hover:text-white transition-colors">
                       Discover The Experience
@@ -172,7 +163,7 @@ export default function HeroSlider() {
 
               {/* 5. FLOATING WIDGETS */}
 
-              {/* Bottom Left: Craftsmanship/Prep Method Widget (Replaced Delivery Time) */}
+              {/* Bottom Left: Craftsmanship/Prep Method Widget */}
               <div className="hero-animate delay-500 absolute bottom-12 left-6 md:left-12 z-20 hidden md:flex items-center gap-4 bg-white/10 backdrop-blur-xl border border-white/20 p-4 rounded-3xl shadow-2xl hover:-translate-y-2 transition-transform duration-500 cursor-pointer">
                 <div className="bg-red-500/20 p-3 rounded-2xl text-red-500">
                   {slide.prepIcon}

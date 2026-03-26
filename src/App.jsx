@@ -7,6 +7,7 @@ import Contact from "./pages/Contact";
 import MorningPage from "./pages/Menu/MorningPage";
 import LunchPage from "./pages/Menu/LunchPage";
 import DinnerPage from "./pages/Menu/DinnerPage";
+import CateringServices from "./pages/CateringServices";
  
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/services" element={<CateringServices/>}/>
           
           {/* Menu Routes */}
           <Route path="/menu/morning" element={<MorningPage />} />

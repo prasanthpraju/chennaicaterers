@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ShoppingCart, User, Menu, X, ChevronDown } from "lucide-react";
-import Logo from "../assets/logo/logo1.png";
+import { Menu, X, ChevronDown } from "lucide-react";
+import Logo from "../../public/logo1.png"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +36,7 @@ export default function Navbar() {
     setMobileMenuExpanded(false);
   };
 
-  // Navigation Links (High Tea removed)
+  // Navigation Links
   const navLinks = [
     { name: "Home", path: "/" },
     {
@@ -47,26 +47,10 @@ export default function Navbar() {
         { name: "Dinner", path: "/menu/dinner" },
       ],
     },
-    // { name: "Orders", path: "/orders" },
     { name: "Services", path: "/services" },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
   ];
-
-  // Cart Icon Component
-  const CartIcon = () => (
-    <Link
-      to="/cart"
-      aria-label="View Cart"
-      className="relative p-2 text-gray-800 hover:text-red-600 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 rounded-lg"
-      onClick={closeNav}
-    >
-      <ShoppingCart size={24} strokeWidth={2.5} />
-      <span className="absolute top-0 right-0 bg-red-600 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm animate-pulse">
-        3
-      </span>
-    </Link>
-  );
 
   return (
     <nav
@@ -76,22 +60,25 @@ export default function Navbar() {
           : "bg-white/95 backdrop-blur-md shadow-sm py-4"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        {/* Left: Logo */}
-        <Link
-          to="/"
-          className="flex items-center z-50 px-1"
-          onClick={closeNav}
-        >
-          <img
-            src={Logo}
-            alt="Chennai Caters Logo"
-            className="h-10 md:h-12 w-auto object-contain"
-          />
-        </Link>
+      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center w-full relative">
+        
+        {/* Left: Logo (Wrapped in a flex-1 container to balance the right side) */}
+        <div className="flex-1 flex justify-start z-50">
+          <Link
+            to="/"
+            className="flex items-center px-1"
+            onClick={closeNav}
+          >
+            <img
+              src={Logo}
+              alt="Chennai Caters Logo"
+              className="h-10 md:h-12 w-auto object-contain mix-blend-multiply"
+            />
+          </Link>
+        </div>
 
-        {/* Center: Desktop Navigation */}
-        <div className="hidden lg:flex items-center gap-8">
+        {/* Center: Desktop Navigation (Increased gap to fill space elegantly) */}
+        <div className="hidden lg:flex items-center justify-center gap-10 lg:gap-12">
           {navLinks.map((link) => {
             const isMainActive = link.path && location.pathname === link.path;
             const isSubActive = link.subLinks?.some(
@@ -103,7 +90,7 @@ export default function Navbar() {
               <div key={link.name} className="relative group">
                 {link.subLinks ? (
                   <div
-                    className={`flex items-center gap-1 relative font-semibold text-base transition-colors duration-300 py-2 cursor-pointer rounded-md px-1 ${
+                    className={`flex items-center gap-1.5 relative font-bold text-[15px] uppercase tracking-wide transition-colors duration-300 py-2 cursor-pointer rounded-md px-1 ${
                       isActive ? "text-red-600" : "text-gray-800 hover:text-red-600"
                     }`}
                   >
@@ -113,7 +100,6 @@ export default function Navbar() {
                       strokeWidth={3}
                       className="transition-transform duration-300 group-hover:rotate-180"
                     />
-                    {/* Active Underline Indicator */}
                     <span
                       className={`absolute left-0 bottom-0 h-[2px] bg-red-600 transition-all duration-300 rounded-full ${
                         isActive ? "w-full" : "w-0 group-hover:w-full"
@@ -124,12 +110,11 @@ export default function Navbar() {
                   <Link
                     to={link.path}
                     onClick={closeNav}
-                    className={`flex items-center gap-1 relative font-semibold text-base transition-colors duration-300 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 rounded-md px-1 ${
+                    className={`flex items-center gap-1 relative font-bold text-[15px] uppercase tracking-wide transition-colors duration-300 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 rounded-md px-1 ${
                       isActive ? "text-red-600" : "text-gray-800 hover:text-red-600"
                     }`}
                   >
                     {link.name}
-                    {/* Active Underline Indicator */}
                     <span
                       className={`absolute left-0 bottom-0 h-[2px] bg-red-600 transition-all duration-300 rounded-full ${
                         isActive ? "w-full" : "w-0 group-hover:w-full"
@@ -147,7 +132,7 @@ export default function Navbar() {
                           key={subLink.name}
                           to={subLink.path}
                           onClick={closeNav}
-                          className={`px-4 py-2.5 text-sm font-semibold transition-colors ${
+                          className={`px-4 py-3 text-sm font-bold uppercase tracking-wider transition-colors ${
                             location.pathname === subLink.path
                               ? "bg-red-50 text-red-600"
                               : "text-gray-700 hover:bg-gray-50 hover:text-red-600"
@@ -164,25 +149,14 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* Right: Desktop Actions */}
-        <div className="hidden lg:flex items-center gap-6 z-50">
-          <CartIcon />
-          <Link
-            to="/login"
-            onClick={closeNav}
-            className="flex items-center gap-2 bg-[#00b251] hover:bg-green-600 text-white px-6 py-2 rounded-full font-bold transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5"
-          >
-            <User size={18} strokeWidth={2.5} />
-            <span>Login</span>
-          </Link>
-        </div>
+        {/* Right: Invisible spacer to perfectly balance the flex layout */}
+        <div className="hidden lg:flex flex-1 justify-end"></div>
 
-        {/* Mobile Toggle & Cart */}
-        <div className="flex lg:hidden items-center gap-3 z-50">
-          <CartIcon />
+        {/* Mobile Toggle */}
+        <div className="flex lg:hidden items-center z-50">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="text-gray-800 p-1 focus:outline-none rounded-lg transition-transform duration-300"
+            className="text-gray-800 p-1 focus:outline-none rounded-lg transition-transform duration-300 hover:bg-gray-100"
           >
             {isOpen ? (
               <X size={28} strokeWidth={2.5} />
@@ -213,7 +187,7 @@ export default function Navbar() {
                   {link.subLinks ? (
                     <button
                       onClick={() => setMobileMenuExpanded(!mobileMenuExpanded)}
-                      className={`text-lg font-bold transition-colors py-3 px-2 rounded-lg flex-1 text-left flex justify-between items-center ${
+                      className={`text-lg font-bold uppercase tracking-wide transition-colors py-3 px-2 rounded-lg flex-1 text-left flex justify-between items-center ${
                         isActive
                           ? "text-red-600 bg-red-50/50"
                           : "text-gray-800 hover:text-red-600 hover:bg-gray-50"
@@ -232,7 +206,7 @@ export default function Navbar() {
                     <Link
                       to={link.path}
                       onClick={closeNav}
-                      className={`text-lg font-bold transition-colors py-3 px-2 rounded-lg flex-1 ${
+                      className={`text-lg font-bold uppercase tracking-wide transition-colors py-3 px-2 rounded-lg flex-1 ${
                         isActive
                           ? "text-red-600 bg-red-50/50"
                           : "text-gray-800 hover:text-red-600 hover:bg-gray-50"
@@ -254,7 +228,7 @@ export default function Navbar() {
                         key={subLink.name}
                         to={subLink.path}
                         onClick={closeNav}
-                        className={`pl-6 pr-4 py-3 text-base font-semibold border-l-2 transition-colors ${
+                        className={`pl-6 pr-4 py-3 text-sm font-bold uppercase tracking-wider border-l-2 transition-colors ${
                           location.pathname === subLink.path
                             ? "border-red-600 text-red-600 bg-red-50/30"
                             : "border-transparent text-gray-600 hover:text-red-600 hover:bg-gray-100/50"
@@ -268,14 +242,6 @@ export default function Navbar() {
               </div>
             );
           })}
-          <Link
-            to="/login"
-            onClick={closeNav}
-            className="flex items-center justify-center gap-2 bg-[#00b251] hover:bg-green-600 text-white px-6 py-3.5 rounded-xl font-bold transition-all duration-300 mt-4 shadow-md active:scale-95"
-          >
-            <User size={20} strokeWidth={2.5} />
-            <span>Login / Register</span>
-          </Link>
         </div>
       </div>
     </nav>
