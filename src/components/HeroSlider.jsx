@@ -63,8 +63,8 @@ export default function HeroSlider() {
   ];
 
   return (
-    // FIX: Replaced mt-[80px] with pt-[72px] to push content down without creating a white gap above the container
-    <div className="w-full h-[600px] md:h-[700px] lg:h-[90vh] min-h-[600px] pt-[72px] font-sans bg-black overflow-hidden relative group">
+    // FIX: Replaced lg:h-[90vh] with lg:h-screen to eliminate the bottom white gap
+    <div className="w-full h-[600px] md:h-[700px] lg:h-screen min-h-[600px] pt-[72px] font-sans bg-black overflow-hidden relative group">
       
       {/* Subtle Cinematic Noise Texture Overlay */}
       <div

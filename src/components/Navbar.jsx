@@ -42,7 +42,7 @@ export default function Navbar() {
     {
       name: "Menu",
       subLinks: [
-        { name: "Morning", path: "/menu/morning" },
+        { name: "Morning", path: "/menu/breakfast" },
         { name: "Lunch", path: "/menu/lunch" },
         { name: "Dinner", path: "/menu/dinner" },
       ],
