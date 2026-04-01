@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, Mail, Phone, MapPin, Send, MessageSquare, CheckCircle2, CalendarHeart } from 'lucide-react';
-
+import  contact from "../assets/CateringSection/contact.png"
 export default function Contact() {
   // Form State
   const [formData, setFormData] = useState({
@@ -41,8 +41,7 @@ export default function Contact() {
       <div className="relative h-[250px] md:h-[350px] w-full flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <img 
-          src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?q=80&w=2000&auto=format&fit=crop" 
-          alt="Contact Us Background"
+          src={contact}
           className="absolute inset-0 w-full h-full object-cover scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90 backdrop-blur-[2px]" />
