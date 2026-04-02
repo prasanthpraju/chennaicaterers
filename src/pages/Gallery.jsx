@@ -9,7 +9,7 @@ const ITEMS_PER_PAGE = 12; // Adjust this number to show more/less items per pag
 // IMPORTANT: IMPORT YOUR PDF HERE
 // =========================================================================
 // import companyPortfolioPdf from "../../assets/portfolio.pdf"; 
-const fallbackPdfUrl = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"; // Replace this variable with your imported PDF
+ // Replace this variable with your imported PDF
 
 // =========================================================================
 // Helper: Safely grabs the best available resolution to optimize loading
