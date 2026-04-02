@@ -11,6 +11,7 @@ import SubMenuDetails from "./pages/Menu/SubMenuDetails";
 // Menu Routes
 
 import MenuDetails from "./pages/Menu/MenuDetails";
+import Gallery from "./pages/Gallery";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/services" element={<CateringServices />} />
+           <Route path="/gallery" element={<Gallery/>}/>
 
           {/* Added missing route for viewing specific menu details */}
           <Route path="/menu/:type" element={<MenuDetails />} />

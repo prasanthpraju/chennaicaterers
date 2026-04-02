@@ -4,7 +4,6 @@ import {
   Sparkles,
   Flame,
   Star,
-  ChevronDown,
   ChefHat,
   Leaf,
   UtensilsCrossed,
@@ -28,7 +27,7 @@ export default function HeroSlider() {
       //   bgText: "BIRYANI",
       title: "Authentic Biryani",
       subtitle: "Cooked slowly with traditional spices over wood fire.",
-      offer: "20% OFF TODAY",
+      // offer: "20% OFF TODAY",
       rating: "4.9",
       prepMethod: "12-Hour Dum Cooked",
       prepIcon: <Flame size={24} />,
@@ -147,18 +146,6 @@ export default function HeroSlider() {
                 >
                   {slide.subtitle}
                 </p>
-
-                {/* Scroll Indicator */}
-                <div className="hero-animate delay-400 flex flex-col items-center gap-8">
-                  <div className="flex flex-col items-center gap-2 cursor-pointer group mt-4">
-                    <span className="text-xs text-gray-400 font-bold uppercase tracking-[0.3em] group-hover:text-white transition-colors">
-                      Discover The Experience
-                    </span>
-                    <div className="w-8 h-12 rounded-full border-2 border-white/30 flex justify-center p-1 group-hover:border-white/60 transition-colors">
-                      <div className="w-1.5 h-3 bg-red-600 rounded-full animate-[bounce_2s_infinite]" />
-                    </div>
-                  </div>
-                </div>
               </div>
 
               {/* 5. FLOATING WIDGETS */}

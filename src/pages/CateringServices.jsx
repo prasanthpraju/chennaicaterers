@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const services = [
   {
@@ -53,56 +54,103 @@ const services = [
   },
   {
     id: 11,
-    title: 'Hotel accommodation Catering',
+    title: 'Hotel accommodation',
     image: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=800&auto=format&fit=crop',
   },
 ];
 
+// --- Animation Variants ---
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.05 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: "tween", ease: "easeOut", duration: 0.4 } },
+};
+
 export default function CateringServices() {
   return (
-    <div className="w-full min-h-screen bg-white pt-28 pb-16 px-4 sm:px-6 lg:px-8 font-sans">
-      <div className="max-w-[1400px] mx-auto">
+    <div className="w-full min-h-screen bg-[#FAFAFA] pt-24 pb-20 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="max-w-7xl mx-auto">
         
-        {/* Responsive Grid: 2 cols on mobile, 3 on tablet, 4 on large screens */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-10 md:gap-y-12">
-          
-          {services.map((item) => (
-            <div key={item.id} className="relative group cursor-pointer">
-              
-              {/* This wrapper expands and gets a shadow on hover.
-                Using p-3 md:p-4 allows it to fit better on mobile.
-              */}
-              <div className="relative z-10 p-3 md:p-4 -m-3 md:-m-4 transition-all duration-300 ease-in-out group-hover:bg-white group-hover:shadow-[0_10px_40px_rgba(0,0,0,0.12)] group-hover:z-50">
-                
-                {/* Image container */}
-                <div className="w-full aspect-square overflow-hidden mb-3 md:mb-4 border border-gray-100/50">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                  />
-                </div>
+        {/* Header Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: -10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-14"
+        >
+          <span className="inline-block py-1 px-3 bg-red-50 text-red-600 font-extrabold tracking-widest uppercase text-[10px] sm:text-xs mb-3 rounded-full">
+            Our Expertise
+          </span>
+          <h2 className="text-3xl md:text-5xl font-black text-gray-900 tracking-tight mb-4 capitalize">
+            Catering <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-800">Services</span>
+          </h2>
+          <p className="text-gray-500 font-medium text-sm md:text-base max-w-2xl mx-auto">
+            From intimate gatherings to grand celebrations, we bring authentic flavors and impeccable service to every occasion.
+          </p>
+        </motion.div>
 
+        {/* Responsive Grid */}
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8"
+        >
+          {services.map((item) => (
+            <motion.div 
+              variants={cardVariants}
+              key={item.id} 
+              className="group bg-white rounded-2xl p-2 md:p-3 shadow-sm hover:shadow-2xl hover:shadow-red-900/10 border border-gray-100 transition-all duration-300 ease-out cursor-pointer flex flex-col"
+            >
+              
+              {/* Image Container with Inner Shadow */}
+              <div className="w-full aspect-square overflow-hidden rounded-xl relative mb-3 bg-gray-100">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                />
+                {/* Subtle gradient overlay to make images look richer */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+
+              {/* Text & Actions Container */}
+              <div className="flex flex-col flex-grow px-1 pb-1">
                 {/* Title */}
-                <h3 className="text-center font-bold text-[14px] md:text-[17px] text-[#2c3e50] leading-tight px-1">
+                <h3 className="text-center font-extrabold text-[13px] md:text-base text-gray-800 group-hover:text-red-600 transition-colors duration-300 line-clamp-1 mb-1">
                   {item.title}
                 </h3>
 
-                {/* Hover Buttons (Hidden by default, reveal on hover) */}
-                <div className="grid grid-cols-2 gap-2 md:gap-3 overflow-hidden max-h-0 opacity-0 group-hover:max-h-16 group-hover:opacity-100 group-hover:mt-3 md:group-hover:mt-5 transition-all duration-300 ease-in-out">
-                  <button className="bg-[#fb8c26] hover:bg-[#e0771c] text-white font-bold text-[11px] md:text-sm tracking-wide uppercase py-2 md:py-2.5 rounded-sm transition-colors shadow-sm">
+                {/* Hover Buttons Reveal */}
+                <div className="grid grid-cols-2 gap-2 overflow-hidden max-h-0 opacity-0 group-hover:max-h-[50px] group-hover:opacity-100 group-hover:mt-3 transition-all duration-300 ease-in-out">
+                  
+                  {/* Primary Action */}
+                  <button className="bg-red-600 hover:bg-red-700 text-white font-bold text-[10px] md:text-xs tracking-wider uppercase py-2 md:py-2.5 rounded-lg transition-colors active:scale-95 shadow-sm">
                     Book
                   </button>
-                  <button className="bg-[#fb8c26] hover:bg-[#e0771c] text-white font-bold text-[11px] md:text-sm tracking-wide uppercase py-2 md:py-2.5 rounded-sm transition-colors shadow-sm">
+                  
+                  {/* Secondary Action */}
+                  <button className="bg-red-50 hover:bg-red-100 text-red-600 font-bold text-[10px] md:text-xs tracking-wider uppercase py-2 md:py-2.5 rounded-lg transition-colors active:scale-95 border border-red-100">
                     View
                   </button>
-                </div>
-                
-              </div>
-            </div>
-          ))}
 
-        </div>
+                </div>
+              </div>
+
+            </motion.div>
+          ))}
+        </motion.div>
+
       </div>
     </div>
   );

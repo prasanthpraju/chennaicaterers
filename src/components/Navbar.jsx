@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
-import Logo from "../../public/logo1.png"
+import Logo from "../../public/logo1.png";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,6 +48,7 @@ export default function Navbar() {
       ],
     },
     { name: "Services", path: "/services" },
+    { name: "gallery", path: "/gallery" },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
   ];
@@ -61,14 +62,9 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center w-full relative">
-        
         {/* Left: Logo (Wrapped in a flex-1 container to balance the right side) */}
         <div className="flex-1 flex justify-start z-50">
-          <Link
-            to="/"
-            className="flex items-center px-1"
-            onClick={closeNav}
-          >
+          <Link to="/" className="flex items-center px-1" onClick={closeNav}>
             <img
               src={Logo}
               alt="Chennai Caters Logo"
@@ -82,7 +78,7 @@ export default function Navbar() {
           {navLinks.map((link) => {
             const isMainActive = link.path && location.pathname === link.path;
             const isSubActive = link.subLinks?.some(
-              (sub) => location.pathname === sub.path
+              (sub) => location.pathname === sub.path,
             );
             const isActive = isMainActive || isSubActive;
 
@@ -91,7 +87,9 @@ export default function Navbar() {
                 {link.subLinks ? (
                   <div
                     className={`flex items-center gap-1.5 relative font-bold text-[15px] uppercase tracking-wide transition-colors duration-300 py-2 cursor-pointer rounded-md px-1 ${
-                      isActive ? "text-red-600" : "text-gray-800 hover:text-red-600"
+                      isActive
+                        ? "text-red-600"
+                        : "text-gray-800 hover:text-red-600"
                     }`}
                   >
                     {link.name}
@@ -111,7 +109,9 @@ export default function Navbar() {
                     to={link.path}
                     onClick={closeNav}
                     className={`flex items-center gap-1 relative font-bold text-[15px] uppercase tracking-wide transition-colors duration-300 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 rounded-md px-1 ${
-                      isActive ? "text-red-600" : "text-gray-800 hover:text-red-600"
+                      isActive
+                        ? "text-red-600"
+                        : "text-gray-800 hover:text-red-600"
                     }`}
                   >
                     {link.name}
@@ -177,7 +177,7 @@ export default function Navbar() {
           {navLinks.map((link) => {
             const isMainActive = link.path && location.pathname === link.path;
             const isSubActive = link.subLinks?.some(
-              (sub) => location.pathname === sub.path
+              (sub) => location.pathname === sub.path,
             );
             const isActive = isMainActive || isSubActive;
 
@@ -220,7 +220,9 @@ export default function Navbar() {
                 {link.subLinks && (
                   <div
                     className={`flex flex-col overflow-hidden transition-all duration-300 bg-gray-50/50 rounded-b-lg ${
-                      mobileMenuExpanded ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+                      mobileMenuExpanded
+                        ? "max-h-64 opacity-100"
+                        : "max-h-0 opacity-0"
                     }`}
                   >
                     {link.subLinks.map((subLink) => (

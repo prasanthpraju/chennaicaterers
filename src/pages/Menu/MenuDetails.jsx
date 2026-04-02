@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const BASE_URL = "https://api.chennaicaterers.in";
 
@@ -17,6 +17,7 @@ const MenuDetails = () => {
   const fetchMenu = async () => {
     try {
       setLoading(true);
+      // Depending on your Strapi setup, you might need to append ?populate=* // to ensure 'foods' array is fetched if it stops showing up.
       const res = await axios.get(`${BASE_URL}/api/menus/${type}`);
       setMenu(res.data?.data || []);
     } catch (err) {
@@ -96,7 +97,7 @@ const MenuDetails = () => {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] relative overflow-hidden font-sans">
-      {/* Background Decorative Elements - Changed to pure red tones */}
+      {/* Background Decorative Elements */}
       <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-red-50/60 to-transparent pointer-events-none"></div>
       <div className="absolute top-20 -left-40 w-96 h-96 bg-red-200/20 rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute top-40 -right-40 w-96 h-96 bg-red-100/30 rounded-full blur-3xl pointer-events-none"></div>
@@ -128,58 +129,83 @@ const MenuDetails = () => {
           animate="show"
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
         >
-          {menu.map((item) => (
-            <motion.div key={item.id} variants={itemVariants} className="group h-full">
-              <Link 
-                to={`/menu-item/${item.documentId}`}
-                state={{ itemData: item }}
-                className="flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-2xl hover:shadow-red-900/5 border border-gray-100 overflow-hidden transition-all duration-500 hover:-translate-y-1.5 h-full relative cursor-pointer"
-              >
-                {/* Image Section */}
-                <div className="h-56 w-full relative overflow-hidden bg-gray-50">
-                  {item.image ? (
-                    <>
-                      <img
-                        src={getImageUrl(item.image)}
-                        alt={item.title}
-                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
-                      />
-                      {/* Inner Glassmorphism Gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </>
-                  ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center text-gray-300 bg-gray-50">
-                      <svg className="w-10 h-10 mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          {menu.map((item) => {
+            // Calculate total package price from foods array
+            const packagePrice = item.foods?.reduce((total, food) => total + (food.price || 0), 0) || 0;
+
+            return (
+              <motion.div key={item.id} variants={itemVariants} className="group h-full">
+                <Link 
+                  to={`/menu-item/${item.documentId}`}
+                  state={{ itemData: item }}
+                  className="flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-2xl hover:shadow-red-900/5 border border-gray-100 overflow-hidden transition-all duration-500 hover:-translate-y-1.5 h-full relative cursor-pointer"
+                >
+                  {/* Image Section */}
+                  <div className="h-56 w-full relative overflow-hidden bg-gray-50">
+                    {item.image ? (
+                      <>
+                        <img
+                          src={getImageUrl(item.image)}
+                          alt={item.title}
+                          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      </>
+                    ) : (
+                      <div className="w-full h-full flex flex-col items-center justify-center text-gray-300 bg-gray-50">
+                        <svg className="w-10 h-10 mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                      </div>
+                    )}
+                    
+                    {/* Floating Action Button inside Image */}
+                    <div className="absolute bottom-4 right-4 bg-white w-11 h-11 rounded-full flex items-center justify-center text-red-600 shadow-lg translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-hover:bg-red-600 group-hover:text-white transition-all duration-300 z-10">
+                      <svg className="w-5 h-5 -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                       </svg>
                     </div>
-                  )}
-                  
-                  {/* Floating Action Button inside Image */}
-                  <div className="absolute bottom-4 right-4 bg-white w-11 h-11 rounded-full flex items-center justify-center text-red-600 shadow-lg translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-hover:bg-red-600 group-hover:text-white transition-all duration-300 z-10">
-                    <svg className="w-5 h-5 -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
-                  </div>
-                </div>
 
-                {/* Card Body */}
-                <div className="p-6 flex flex-col flex-grow bg-white z-10 relative">
-                  <h2 className="text-xl font-bold text-gray-900 mb-3 capitalize group-hover:text-red-600 transition-colors duration-300 line-clamp-1">
-                    {item.title}
-                  </h2>
-                  <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-6 flex-grow">
-                    {item.description || "A delicious, chef-crafted selection perfect for your special occasion."}
-                  </p>
-                  
-                  {/* Footer Line */}
-                  <div className="w-full h-1 bg-gray-50 mt-auto rounded-full overflow-hidden">
-                    <div className="w-0 h-full bg-red-600 group-hover:w-full transition-all duration-500 ease-in-out"></div>
+                    {/* Price Badge on Image overlay */}
+                    {packagePrice > 0 && (
+                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-sm z-10 border border-white/20">
+                        <span className="text-red-600 font-black text-sm">₹{packagePrice}</span>
+                      </div>
+                    )}
                   </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
+
+                  {/* Card Body */}
+                  <div className="p-6 flex flex-col flex-grow bg-white z-10 relative">
+                    <div className="flex justify-between items-start mb-3">
+                      <h2 className="text-xl font-bold text-gray-900 capitalize group-hover:text-red-600 transition-colors duration-300 line-clamp-1">
+                        {item.title}
+                      </h2>
+                    </div>
+                    
+                    <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-6 flex-grow">
+                      {item.description || "A delicious, chef-crafted selection perfect for your special occasion."}
+                    </p>
+                    
+                    {/* Package Highlight */}
+                    <div className="mt-auto mb-4 bg-gray-50 rounded-xl p-3 flex justify-between items-center border border-gray-100">
+                      <div className="flex flex-col">
+                        <span className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">Package Price</span>
+                        <span className="text-lg font-black text-gray-900">₹{packagePrice}</span>
+                      </div>
+                      <span className="text-xs font-bold text-red-600 bg-red-100 px-2 py-1 rounded-md">
+                        {item.foods?.length || 0} Items
+                      </span>
+                    </div>
+
+                    {/* Footer Line */}
+                    <div className="w-full h-1 bg-gray-100 mt-2 rounded-full overflow-hidden">
+                      <div className="w-0 h-full bg-red-600 group-hover:w-full transition-all duration-500 ease-in-out"></div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </div>
