@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
-import Logo from "../../public/logo1.png";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,7 +65,7 @@ export default function Navbar() {
         <div className="flex-1 flex justify-start z-50">
           <Link to="/" className="flex items-center px-1" onClick={closeNav}>
             <img
-              src={Logo}
+              src="/logo1.png"
               alt="Chennai Caters Logo"
               className="h-10 md:h-12 w-auto object-contain mix-blend-multiply"
             />
