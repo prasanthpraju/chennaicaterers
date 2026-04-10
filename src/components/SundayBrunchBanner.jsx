@@ -42,7 +42,7 @@ const SundayBrunchBanner = () => {
         {/* Subtitle using the bold, modern theme */}
         <motion.p 
           variants={itemVariants}
-          className="text-red-500 font-bold uppercase tracking-widest text-sm md:text-base mb-4 drop-shadow-md"
+          className="text-pink-500 font-bold uppercase tracking-widest text-sm md:text-base mb-4 drop-shadow-md"
         >
           When it satisfies your tastebuds
         </motion.p>
@@ -60,7 +60,7 @@ const SundayBrunchBanner = () => {
               whileInView={{ width: "100%" }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="absolute -bottom-2 md:-bottom-4 left-0 h-3 text-red-600 drop-shadow-lg" 
+              className="absolute -bottom-2 md:-bottom-4 left-0 h-3 text-pink-600 drop-shadow-lg" 
               viewBox="0 0 200 10" 
               fill="currentColor"
             >

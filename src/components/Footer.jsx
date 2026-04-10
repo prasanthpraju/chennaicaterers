@@ -1,8 +1,27 @@
 import { Link } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaTwitter, FaHeart } from "react-icons/fa";
-import { UtensilsCrossed, ArrowRight } from "lucide-react";
+import { UtensilsCrossed, MapPin, Phone, Mail, ChevronUp } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export default function Footer() {
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  // Show scroll button after scrolling down
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollButton(window.scrollY > 300);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const footerLinks = [
     { name: "Home", path: "/" },
     { name: "Our Menu", path: "/menu" },
@@ -12,161 +31,147 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-[#0f172a] pt-24 pb-8 border-t-[4px] border-red-600 font-sans text-slate-300 relative overflow-hidden">
+    <footer className="w-full bg-[#0a0f1c] pt-12 md:pt-20 pb-6 md:pb-8 border-t border-white/5 font-sans text-slate-400 relative overflow-hidden">
       
-      {/* Decorative Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-[0.03]">
-        <UtensilsCrossed size={500} className="absolute -top-20 -right-20 text-white rotate-12" />
+      {/* Brand Accent Top Line */}
+      <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-[#ec2290] to-transparent opacity-50" />
+
+      {/* Decorative Background Elements - Hidden on mobile for better performance */}
+      <div className="hidden md:block absolute inset-0 overflow-hidden pointer-events-none opacity-[0.02]">
+        <UtensilsCrossed size={600} className="absolute -top-24 -right-24 text-white rotate-12" />
         <UtensilsCrossed size={400} className="absolute -bottom-20 -left-20 text-white -rotate-12" />
-        {/* Subtle radial gradient for depth */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-600 rounded-full blur-[150px] opacity-[0.08]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="w-full max-w-7xl mx-auto px-5 sm:px-6 relative z-10">
         
-        {/* Top Section: Changed to 3 Columns since Contact is removed */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 lg:gap-12 mb-20">
+        {/* Adjusted gap for better mobile flow - Improved spacing */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 md:gap-12 lg:gap-16 mb-10 md:mb-16">
           
-          {/* 1. Brand Section */}
-          <div className="flex flex-col">
-            <Link to="/" className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight mb-6 inline-block">
-              Chennai <span className="text-red-500">Caterers</span>
+          {/* 1. Brand Section - Improved mobile centering */}
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left w-full">
+            <Link 
+              to="/" 
+              onClick={scrollToTop}
+              className="text-xl sm:text-2xl md:text-3xl font-black text-white uppercase tracking-tighter mb-3 sm:mb-4 inline-block hover:text-[#ec2290] transition-colors"
+            >
+              Chennai <span className="text-[#ec2290]">Caterers</span>
             </Link>
-            <p className="text-slate-400 text-[15px] leading-relaxed mb-8 font-medium pr-8">
-              Delivering hot, fresh, and authentic meals straight to your door. We blend traditional recipes with modern hygiene to be your trusted partner for every occasion.
+            <p className="text-slate-500 text-xs sm:text-sm leading-relaxed mb-5 sm:mb-6 font-medium max-w-sm px-4 sm:px-0">
+              Premium catering services in Chennai. We specialize in authentic traditional flavors, 
+              impeccable service, and high-standard hygiene.
             </p>
             
-            {/* Social Icons */}
-            <div className="flex gap-4">
+            <div className="flex gap-3 sm:gap-4">
               {[FaFacebookF, FaInstagram, FaTwitter].map((Icon, idx) => (
                 <a 
                   key={idx} 
                   href="#" 
-                  className="bg-slate-800/80 p-3.5 rounded-xl text-slate-300 shadow-sm border border-slate-700/50 hover:-translate-y-1.5 hover:text-white hover:bg-red-600 hover:border-red-500 hover:shadow-[0_10px_20px_rgba(220,38,38,0.2)] transition-all duration-300"
+                  className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-white/5 rounded-full text-slate-400 border border-white/10 hover:bg-[#ec2290] hover:text-white hover:border-[#ec2290] transition-all duration-300 transform hover:scale-110"
+                  aria-label={`Follow us on ${Icon.name}`}
                 >
-                  <Icon size={18} />
+                  <Icon size={14} />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* 2. Quick Links */}
-          <div className="lg:pl-8">
-            <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
-              <span className="w-1.5 h-6 rounded-full bg-gradient-to-b from-orange-400 to-orange-600 inline-block"></span>
-              Explore
+          {/* 2. Quick Links - Improved mobile spacing */}
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left sm:pl-0 lg:pl-8 w-full">
+            <h3 className="text-white font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#ec2290]"></span>
+              Navigation
             </h3>
-            <ul className="flex flex-col gap-4">
+            <ul className="flex flex-col items-center sm:items-start gap-3 sm:gap-4 w-full">
               {footerLinks.map((link) => (
-                <li key={link.name}>
+                <li key={link.name} className="w-full sm:w-auto">
                   <Link 
                     to={link.path} 
-                    className="group flex items-center gap-2 text-slate-400 font-medium text-base hover:text-white transition-colors duration-300 w-fit"
+                    onClick={scrollToTop}
+                    className="group flex items-center justify-center sm:justify-start text-slate-500 font-bold text-[10px] sm:text-[11px] uppercase tracking-widest hover:text-white transition-all duration-300 py-1"
                   >
-                    <span className="w-0 h-[2px] bg-red-500 transition-all duration-300 group-hover:w-4 rounded-full"></span>
-                    <span className="group-hover:translate-x-1 transition-transform duration-300">
-                      {link.name}
-                    </span>
+                    <span className="hidden sm:block w-0 h-[1.5px] bg-[#ec2290] transition-all duration-300 group-hover:w-4 group-hover:mr-3"></span>
+                    {link.name}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* 3. Contact Us (COMMENTED OUT) */}
-          {/* <div>
-            <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
-              <span className="w-1.5 h-6 rounded-full bg-gradient-to-b from-red-400 to-red-600 inline-block"></span>
-              Contact Info
+          {/* 3. Contact Info - Improved mobile touch targets */}
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left col-span-1 sm:col-span-2 lg:col-span-1 w-full">
+            <h3 className="text-white font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#ec2290]"></span>
+              Get In Touch
             </h3>
-            <ul className="flex flex-col gap-6">
-              <li className="flex items-start gap-4 group cursor-pointer">
-                <div className="bg-slate-800 p-2.5 rounded-lg group-hover:bg-red-500/20 transition-colors">
-                  <MapPin size={20} className="text-red-500" />
-                </div>
-                <span className="text-slate-400 text-[15px] font-medium group-hover:text-white transition-colors mt-1">
-                  123 Food Street, T. Nagar,<br />
-                  Chennai, Tamil Nadu
+            
+            <ul className="space-y-4 sm:space-y-5 flex flex-col items-center sm:items-start w-full">
+              <li className="flex flex-row items-start gap-3 sm:gap-4 max-w-[280px] sm:max-w-none text-left w-full justify-center sm:justify-start">
+                <MapPin size={16} sm:size={18} className="text-[#ec2290] shrink-0 mt-0.5" />
+                <span className="text-slate-500 text-xs sm:text-sm font-medium leading-relaxed">
+                  123 Catering Lane, T. Nagar,<br /> Chennai, Tamil Nadu 600017
                 </span>
               </li>
-              <li className="flex items-center gap-4 group cursor-pointer">
-                <div className="bg-slate-800 p-2.5 rounded-lg group-hover:bg-green-500/20 transition-colors">
-                  <Phone size={20} className="text-green-500" />
-                </div>
-                <span className="text-slate-400 text-[15px] font-medium group-hover:text-white transition-colors">
+              <li className="flex flex-row items-center gap-3 sm:gap-4 w-full justify-center sm:justify-start">
+                <Phone size={16} sm:size={18} className="text-[#ec2290] shrink-0" />
+                <a href="tel:+919876543210" className="text-slate-500 text-xs sm:text-sm font-medium hover:text-white transition-colors">
                   +91 98765 43210
-                </span>
+                </a>
               </li>
-              <li className="flex items-center gap-4 group cursor-pointer">
-                <div className="bg-slate-800 p-2.5 rounded-lg group-hover:bg-orange-500/20 transition-colors">
-                  <Mail size={20} className="text-orange-500" />
-                </div>
-                <span className="text-slate-400 text-[15px] font-medium group-hover:text-white transition-colors">
-                  hello@chennaicaters.in
-                </span>
+              <li className="flex flex-row items-center gap-3 sm:gap-4 w-full justify-center sm:justify-start">
+                <Mail size={16} sm:size={18} className="text-[#ec2290] shrink-0" />
+                <a href="mailto:hello@chennaicaterers.com" className="text-slate-500 text-xs sm:text-sm font-medium hover:text-white transition-colors break-all">
+                  hello@chennaicaterers.com
+                </a>
               </li>
             </ul>
-          </div>
-          */}
-
-          {/* 4. Newsletter / CTA */}
-          <div>
-            <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
-              <span className="w-1.5 h-6 rounded-full bg-gradient-to-b from-green-400 to-green-600 inline-block"></span>
-              Stay Updated
-            </h3>
-            <p className="text-slate-400 text-[15px] font-medium mb-6 leading-relaxed">
-              Subscribe to our newsletter for exclusive catering offers, event tips, and fresh menu updates!
-            </p>
-            <form className="flex flex-col gap-3" onSubmit={(e) => e.preventDefault()}>
-              <input 
-                type="email" 
-                placeholder="Enter your email address" 
-                className="w-full px-5 py-3.5 rounded-xl border border-slate-700/50 bg-slate-800/50 text-white placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all"
-              />
-              <button 
-                type="submit" 
-                className="flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white px-6 py-3.5 rounded-xl font-bold transition-all duration-300 shadow-[0_4px_14px_0_rgba(220,38,38,0.39)] hover:shadow-[0_6px_20px_rgba(220,38,38,0.23)] hover:-translate-y-0.5 group"
-              >
-                <span>Subscribe Now</span>
-                <ArrowRight size={18} strokeWidth={2.5} className="group-hover:translate-x-1.5 transition-transform" />
-              </button>
-            </form>
           </div>
 
         </div>
 
-        {/* Bottom Section: Copyright & Developer Link */}
-        <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-slate-500 text-sm font-medium">
-            © {new Date().getFullYear()} Chennai Caters. All rights reserved.
+        {/* Bottom Section - Improved mobile layout */}
+        <div className="pt-6 md:pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6">
+          <p className="text-slate-600 text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-center px-4">
+            © {new Date().getFullYear()} Chennai Caterers. All rights reserved.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center gap-6 text-sm font-medium">
-            <div className="flex gap-6 text-slate-500">
-              <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-              <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-[9px] sm:text-[10px] font-bold uppercase tracking-widest">
+            <div className="flex gap-4 sm:gap-6 text-slate-600">
+              <Link to="/privacy" onClick={scrollToTop} className="hover:text-white transition-colors">
+                Privacy
+              </Link>
+              <Link to="/terms" onClick={scrollToTop} className="hover:text-white transition-colors">
+                Terms
+              </Link>
             </div>
             
-            {/* Divider visible only on larger screens */}
-            <span className="hidden sm:block text-slate-700">|</span>
+            <span className="hidden sm:block text-slate-800">/</span>
             
-            {/* Developer Tag */}
-            <p className="flex items-center gap-1.5 text-slate-400">
-              Developed with <FaHeart className="text-red-500 text-xs animate-pulse" /> by 
+            <p className="flex items-center gap-1.5 text-slate-500 text-center text-[9px] sm:text-[10px]">
+              Made with <FaHeart size={8} sm:size={10} className="text-[#ec2290] animate-pulse" /> by 
               <a 
                 href="https://www.jgntechnologies.com/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-white hover:text-red-400 font-bold transition-colors ml-1"
+                className="text-white hover:text-[#ec2290] transition-colors ml-1"
               >
-                JGN Technologies
+                JGN Tech
               </a>
             </p>
           </div>
         </div>
 
       </div>
+
+      {/* Scroll to top button - Improved mobile visibility */}
+      {/* {showScrollButton && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 bg-[#ec2290] text-white p-3 rounded-full shadow-lg hover:bg-[#d01d7a] transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#ec2290] focus:ring-offset-2"
+          aria-label="Scroll to top"
+        >
+          <ChevronUp size={20} />
+        </button>
+      )} */}
     </footer>
   );
 }

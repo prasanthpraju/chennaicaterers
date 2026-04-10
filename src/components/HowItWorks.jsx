@@ -1,52 +1,50 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, ClipboardList, UserCog, MapPin } from 'lucide-react';
+import { ClipboardList, UserCog, MapPin } from 'lucide-react';
 
 const stepsData = [
   {
     id: "01",
-    title: "The Ability to Choose the Best",
-    description: "The best food, service, and attention to detail, as well as any additional arrangements you've requested for your special occasion.",
+    title: "Choose the Best",
+    description: "The best food, service, and attention to detail, alongside any additional arrangements for your special occasion.",
     icon: ClipboardList,
-    color: "from-orange-400 to-orange-600",
-    glow: "from-orange-500/20 to-red-500/20"
+    // Using a gradient based on your brand pink
+    color: "from-[#ff6baf] to-[#ec2290]",
+    glow: "from-[#ec2290]/40 to-transparent"
   },
   {
     id: "02",
-    title: "Workforce with a Specialized Function",
-    description: "We also have competent chefs on team who can produce a wide range of dishes based on the tastes of our customers.",
+    title: "Specialized Workforce",
+    description: "Our competent chefs can produce a wide range of authentic dishes based entirely on your unique tastes.",
     icon: UserCog,
-    color: "from-amber-400 to-amber-600",
-    glow: "from-amber-500/20 to-orange-500/20"
+    color: "from-[#ec2290] to-[#d11b7c]",
+    glow: "from-[#ec2290]/40 to-transparent"
   },
   {
     id: "03",
-    title: "Service with a Long Tradition",
-    description: "We are focusing on the importance of a long history of outstanding customer service.",
+    title: "Tradition of Service",
+    description: "We focus on the importance of a long history of outstanding customer hospitality and flawless execution.",
     icon: MapPin,
-    color: "from-red-400 to-red-600",
-    glow: "from-red-500/20 to-pink-500/20"
+    color: "from-[#d11b7c] to-[#9d0d59]",
+    glow: "from-[#d11b7c]/40 to-transparent"
   }
 ];
 
 const HowItWorks = () => {
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.3
-      }
+      transition: { staggerChildren: 0.3 }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 40 },
     show: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.7, ease: "easeOut" }
     }
   };
 
@@ -60,7 +58,7 @@ const HowItWorks = () => {
   };
 
   return (
-    <section className="bg-gradient-to-b from-gray-50 to-white py-16 md:py-24 font-sans overflow-hidden">
+    <section className="bg-gradient-to-b from-white to-gray-50 py-20 lg:py-32 font-sans overflow-hidden">
       <div className="max-w-6xl mx-auto px-6">
         
         {/* Section Header */}
@@ -69,20 +67,21 @@ const HowItWorks = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-            
-          <h2 className="text-3xl md:text-4xl font-black text-gray-900 uppercase tracking-tight mb-2">
-            How It <span className="text-red-600 relative inline-block">
+          <p className="text-[#ec2290] font-bold uppercase tracking-[0.2em] text-sm mb-3">Our Process</p>
+          <h2 className="text-4xl md:text-5xl font-black text-[#1e293b] uppercase tracking-tight mb-2">
+            How It <span className="text-[#ec2290] relative inline-block">
               Works
               <motion.svg 
                 initial={{ width: 0 }}
                 whileInView={{ width: "100%" }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.3 }}
-                className="absolute -bottom-2 left-0 h-2 text-red-200" 
+                className="absolute -bottom-3 left-0 h-3 text-[#ec2290]/30" 
                 viewBox="0 0 200 10" 
                 fill="currentColor"
+                preserveAspectRatio="none"
               >
                 <path d="M0,5 Q50,0 100,5 T200,5" stroke="none" fill="currentColor" />
               </motion.svg>
@@ -96,7 +95,7 @@ const HowItWorks = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 relative"
+          className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 relative"
         >
           {stepsData.map((step, index) => {
             const Icon = step.icon;
@@ -108,16 +107,17 @@ const HowItWorks = () => {
                 className="relative flex flex-col items-center group"
               >
                 
-                {/* Connecting Dashed Line (Visible only on desktop, not on the last item) */}
+                {/* Connecting Dashed Line */}
                 {index < stepsData.length - 1 && (
-                  <div className="hidden md:block absolute top-12 left-[55%] w-[90%] z-0 pointer-events-none">
-                    <svg width="100%" height="40" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <div className="hidden md:block absolute top-14 left-[60%] w-[80%] z-0 pointer-events-none">
+                    <svg width="100%" height="40" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
                       <motion.path 
                         variants={drawLineVariants}
-                        d="M0 20 Q 50 -10, 100 20 T 200 20" 
-                        stroke="#d1d5db" 
+                        d="M0 20 Q 100 -10, 200 20" 
+                        stroke="#ec2290" 
                         strokeWidth="2" 
-                        strokeDasharray="6 6"
+                        strokeDasharray="8 8"
+                        strokeOpacity="0.3"
                         fill="none"
                       />
                       {/* Arrow head */}
@@ -125,8 +125,9 @@ const HowItWorks = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 2, duration: 0.5 }}
-                        d="M 190 10 L 200 20 L 190 30"
-                        stroke="#d1d5db"
+                        d="M 190 12 L 200 20 L 190 28"
+                        stroke="#ec2290"
+                        strokeOpacity="0.5"
                         strokeWidth="2"
                         fill="none"
                         strokeLinecap="round"
@@ -137,31 +138,31 @@ const HowItWorks = () => {
                 )}
 
                 {/* Icon Circle Container */}
-                <div className="relative mb-8 z-10">
+                <div className="relative mb-10 z-10">
                   {/* Background Hover Glow */}
-                  <div className={`absolute -inset-4 bg-gradient-to-r ${step.glow} rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                  <div className={`absolute -inset-4 bg-gradient-to-r ${step.glow} rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
                   
                   {/* Main White Circle */}
                   <motion.div 
                     whileHover={{ scale: 1.05, y: -5 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                    className="w-24 h-24 bg-white rounded-full shadow-xl border border-gray-100 flex items-center justify-center relative z-10"
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    className="w-28 h-28 bg-white rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.08)] border-2 border-transparent group-hover:border-[#ec2290]/20 flex items-center justify-center relative z-10 transition-colors duration-300"
                   >
-                    <Icon size={36} strokeWidth={1.5} className="text-gray-700 group-hover:text-red-600 transition-colors duration-300" />
+                    <Icon size={40} strokeWidth={1.5} className="text-gray-400 group-hover:text-[#ec2290] transition-colors duration-500" />
                     
                     {/* Number Badge */}
-                    <div className={`absolute -top-1 -left-2 w-8 h-8 rounded-full bg-gradient-to-br ${step.color} shadow-lg border-2 border-white flex items-center justify-center z-20`}>
-                      <span className="text-white text-xs font-bold">{step.id}</span>
+                    <div className={`absolute -top-2 -left-2 w-10 h-10 rounded-full bg-gradient-to-br ${step.color} shadow-lg border-4 border-white flex items-center justify-center z-20 transform group-hover:scale-110 transition-transform duration-300`}>
+                      <span className="text-white text-sm font-black">{step.id}</span>
                     </div>
                   </motion.div>
                 </div>
 
                 {/* Text Content */}
-                <div className="text-center px-4">
-                  <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 group-hover:text-red-600 transition-colors duration-300">
+                <div className="text-center px-4 max-w-[280px]">
+                  <h3 className="text-xl font-bold text-[#1e293b] mb-4 group-hover:text-[#ec2290] transition-colors duration-300">
                     {step.title}
                   </h3>
-                  <p className="text-gray-600 text-sm md:text-base leading-relaxed font-medium">
+                  <p className="text-gray-500 text-[15px] leading-relaxed">
                     {step.description}
                   </p>
                 </div>

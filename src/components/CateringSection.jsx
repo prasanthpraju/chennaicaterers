@@ -175,7 +175,7 @@ const CateringSection = () => {
         >
            
           <h2 className="text-3xl md:text-4xl font-black text-gray-900 uppercase tracking-tight mb-2">
-            Our Signature <span className="text-red-600 relative inline-block">
+            Our Signature <span className="text-pink-600 relative inline-block">
               Menus
               <motion.svg 
                 initial={{ width: 0 }}
@@ -239,7 +239,7 @@ const CateringSection = () => {
                   prevMenu();
                   setIsAutoPlaying(false);
                 }}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-gray-700 hover:bg-red-600 hover:text-white transition-all duration-300 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-gray-700 hover:bg-pink-600 hover:text-white transition-all duration-300 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
                 aria-label="Previous menu"
               >
                 <ChevronLeft size={20} />
@@ -249,7 +249,7 @@ const CateringSection = () => {
                   nextMenu();
                   setIsAutoPlaying(false);
                 }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-gray-700 hover:bg-red-600 hover:text-white transition-all duration-300 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-gray-700 hover:bg-pink-600 hover:text-white transition-all duration-300 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
                 aria-label="Next menu"
               >
                 <ChevronRight size={20} />
@@ -258,7 +258,7 @@ const CateringSection = () => {
               {/* Auto-play Indicator */}
               <button
                 onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-                className="absolute bottom-4 left-4 z-20 w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center text-white hover:bg-red-600 transition-all duration-300 text-xs"
+                className="absolute bottom-4 left-4 z-20 w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center text-white hover:bg-pink-600 transition-all duration-300 text-xs"
                 aria-label={isAutoPlaying ? "Pause slideshow" : "Play slideshow"}
               >
                 {isAutoPlaying ? "⏸" : "▶"}
@@ -270,7 +270,7 @@ const CateringSection = () => {
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}
                   transition={{ duration: 5, ease: "linear", repeat: Infinity }}
-                  className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-red-500 to-orange-500 z-20"
+                  className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-pink-500 to-pink-500 z-20"
                 />
               )}
             </div>
@@ -288,8 +288,8 @@ const CateringSection = () => {
                   }}
                   className={`transition-all duration-300 ${
                     activeMenu.id === menu.id
-                      ? "w-6 h-2 bg-red-600 rounded-full"
-                      : "w-2 h-2 bg-gray-300 rounded-full hover:bg-red-400"
+                      ? "w-6 h-2 bg-pink-600 rounded-full"
+                      : "w-2 h-2 bg-gray-300 rounded-full hover:bg-pink-400"
                   }`}
                   aria-label={`Go to ${menu.title}`}
                 />
@@ -325,7 +325,7 @@ const CateringSection = () => {
                 </p>
                 <button
                   onClick={() => setIsExpanded(!isExpanded)}
-                  className="text-red-600 font-semibold hover:text-red-700 transition-colors inline-flex items-center gap-1 group text-sm"
+                  className="text-pink-600 font-semibold hover:text-pink-700 transition-colors inline-flex items-center gap-1 group text-sm"
                 >
                   {isExpanded ? 'Show less' : 'Read more'}
                   <ChevronRight 
@@ -342,7 +342,7 @@ const CateringSection = () => {
                     prevMenu();
                     setIsAutoPlaying(false);
                   }}
-                  className="group w-10 h-10 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-500 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                  className="group w-10 h-10 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-500 hover:bg-pink-600 hover:border-pink-600 hover:text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
                   aria-label="Previous menu"
                 >
                   <ChevronLeft size={18} className="group-hover:scale-110 transition-transform" />
@@ -352,7 +352,7 @@ const CateringSection = () => {
                     nextMenu();
                     setIsAutoPlaying(false);
                   }}
-                  className="group w-10 h-10 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-500 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                  className="group w-10 h-10 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-500 hover:bg-pink-600 hover:border-pink-600 hover:text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
                   aria-label="Next menu"
                 >
                   <ChevronRight size={18} className="group-hover:scale-110 transition-transform" />
